@@ -1,6 +1,8 @@
 ;(function($) {
 
 	var windowWidth = $(window).width();
+	var $navList = $('.navigation__list');
+	var $navMenu = $('.navigation');
 
 	$(function() {
 
@@ -12,7 +14,7 @@
 			speed: 1200
 		});
 
-		//Scroll page and Add header menu item active class
+		//Scroll page to need section
 		$(document).on('click', '.navigation__link, .scroll-top__link', function(event) {
 			event.preventDefault();
 
@@ -27,8 +29,8 @@
 		$(document).on('click', '.menu-toggle', function(event) {
 			event.preventDefault();
 
-			$('.navigation').toggleClass('js-nav-open');
-			$('.navigation__list').slideToggle();
+			$navMenu.toggleClass('js-nav-open');
+			$navList.slideToggle();
 		}); // end click
 	}); // end ready
 
@@ -37,11 +39,13 @@
 		var windowWidth = $(window).width();
 		var scrollWidth = scrollbarWidth();
 
+		console.log(scrollWidth);
+
 		if(windowWidth <= (768 - scrollWidth) ) {
-			$('.navigation__list').slideUp();
-			$('.navigation').removeClass('js-nav-open');
+			$navList.slideUp();
+			$navMenu.removeClass('js-nav-open');
 		} else {
-			$('.navigation__list').show();
+			$navList.show();
 
 		}
 	}); // end resize
@@ -51,18 +55,23 @@
 		//Show scroll to top arrow 
 		var headerHeight = $('#scroll-top').outerHeight();
 		var scroll = $(window).scrollTop();
+		var $scrollTop = $('.scroll-top');
 
-		$('.scroll-top').addClass('js-scroll');
+		$scrollTop.addClass('js-scroll');
 
 		setTimeout(function() {
-			$('.scroll-top').removeClass('js-scroll');
+			$scrollTop.removeClass('js-scroll');
 		}, 300);
 
 		if(scroll > headerHeight) {
-			$('.scroll-top').addClass('js-scroll-top-show');
+			$scrollTop.addClass('js-scroll-top-show');
 		} else {
-			$('.scroll-top').removeClass('js-scroll-top-show');
+			$scrollTop.removeClass('js-scroll-top-show');
 		}
+
+		//Hide mobile menu
+		$navList.slideUp();
+		$navMenu.removeClass('js-nav-open');
 	}); // end scroll
 
 	function scrollbarWidth() {
