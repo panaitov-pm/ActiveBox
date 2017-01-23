@@ -1,10 +1,16 @@
 ;(function($) {
 
-	var windowWidth = $(window).width();
+	
+	var scrollWidth = scrollbarWidth();
 	var $navList = $('.navigation__list');
 	var $navMenu = $('.navigation');
 
 	$(function() {
+
+		//Init WOW
+		new WOW().init({   
+            mobile: false 
+		});
 
 		// Slider
 		$('.client-slider').slick({
@@ -37,10 +43,7 @@
 	$(window).resize(function(event) {
 
 		var windowWidth = $(window).width();
-		var scrollWidth = scrollbarWidth();
-
-		console.log(scrollWidth);
-
+		
 		if(windowWidth <= (768 - scrollWidth) ) {
 			$navList.slideUp();
 			$navMenu.removeClass('js-nav-open');
@@ -51,6 +54,8 @@
 	}); // end resize
 
 	$(window).scroll(function(event) {
+
+		var windowWidth = $(window).width();
 
 		//Show scroll to top arrow 
 		var headerHeight = $('#scroll-top').outerHeight();
@@ -70,8 +75,10 @@
 		}
 
 		//Hide mobile menu
-		$navList.slideUp();
-		$navMenu.removeClass('js-nav-open');
+		if(windowWidth <= (768 - scrollWidth) ) {
+			$navList.slideUp();
+			$navMenu.removeClass('js-nav-open');
+		}
 	}); // end scroll
 
 	function scrollbarWidth() {
@@ -80,5 +87,10 @@
   		var scrollbarWidth = windowsWidth - documentWidth;
   		return scrollbarWidth;
 	}
+
+	//Init smoothscroll
+	SmoothScroll({
+		touchpadSupport: true
+	});
 
 })(jQuery);
